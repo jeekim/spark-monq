@@ -1,0 +1,337 @@
+val tt = all.map{ l => val cols = l.split("\t"); (cols(6), cols(7))}
+
+val chemical = tt.filter{ e => e._2 == "chemical"}.map{e => e._1}
+val gene = tt.filter{ e => e._2 == "gene_protein"}.map{e => e._1}
+val disease = tt.filter{ e => e._2 == "disease"}.map{e => e._1}
+val organism = tt.filter{ e => e._2 == "organism"}.map{e => e._1}
+val go_term = tt.filter{ e => e._2 == "go_term"}.map{e => e._1}
+
+val ptt = all.map{ l => val cols = l.split("\t"); (cols(0), cols(6), cols(7))}
+val ptt3 = ptt.filter{ l => l._2.length == 3 }
+
+val chemical0 = ptt.filter{ e => e._3 == "chemical"}.map{ e => e._2 }
+val gene0 = ptt.filter{ e => e._3 == "gene_protein"}.map{ e => e._2 }
+val disease0 = ptt.filter{ e => e._3 == "disease"}.map{ e => e._2 }
+val organism0 = ptt.filter{ e => e._3 == "organism"}.map{ e => e._2 }
+val go_term0 = ptt.filter{ e => e._3 == "go_term"}.map{ e => e._2 }
+
+val chemical3 = ptt3.filter{ e => e._3 == "chemical"}.map{ e => e._2 }
+val gene3 = ptt3.filter{ e => e._3 == "gene_protein"}.map{ e => e._2 }
+val disease3 = ptt3.filter{ e => e._3 == "disease"}.map{ e => e._2 }
+val organism3 = ptt3.filter{ e => e._3 == "organism"}.map{ e => e._2 }
+val go_term3 = ptt3.filter{ e => e._3 == "go_term"}.map{ e => e._2 }
+
+ptt3.filter{ e => e._3 == "chemical"}.map{ e => e._1 }.distinct.count
+ptt3.filter{ e => e._3 == "gene_protein"}.map{ e => e._1 }.distinct.count
+ptt3.filter{ e => e._3 == "go_term"}.map{ e => e._1 }.distinct.count
+ptt3.filter{ e => e._3 == "organism"}.map{ e => e._1 }.distinct.count
+ptt3.filter{ e => e._3 == "disease"}.map{ e => e._1 }.distinct.count
+
+val ptt4 = ptt.filter{ l => l._2.length == 4 }
+ptt4.cache
+val chemical4 = ptt4.filter{ e => e._3 == "chemical"}.map{ e => e._2 }
+val gene4 = ptt4.filter{ e => e._3 == "gene_protein"}.map{ e => e._2 }
+val disease4 = ptt4.filter{ e => e._3 == "disease"}.map{ e => e._2 }
+val organism4 = ptt4.filter{ e => e._3 == "organism"}.map{ e => e._2 }
+val go_term4 = ptt4.filter{ e => e._3 == "go_term"}.map{ e => e._2 }
+
+val c = ptt4.filter{ e => e._3 == "chemical"}.map{ e => e._1 }.distinct.count
+val ge = ptt4.filter{ e => e._3 == "gene_protein"}.map{ e => e._1 }.distinct.count
+val go = ptt4.filter{ e => e._3 == "go_term"}.map{ e => e._1 }.distinct.count
+val o = ptt4.filter{ e => e._3 == "organism"}.map{ e => e._1 }.distinct.count
+val d = ptt4.filter{ e => e._3 == "disease"}.map{ e => e._1 }.distinct.count
+
+val ptt5 = ptt.filter{ l => l._2.length == 5 }
+ptt5.cache
+
+val chemical5 = ptt5.filter{ e => e._3 == "chemical"}.map{ e => e._2 }
+val gene5 = ptt5.filter{ e => e._3 == "gene_protein"}.map{ e => e._2 }
+val disease5 = ptt5.filter{ e => e._3 == "disease"}.map{ e => e._2 }
+val organism5 = ptt5.filter{ e => e._3 == "organism"}.map{ e => e._2 }
+val go_term5 = ptt5.filter{ e => e._3 == "go_term"}.map{ e => e._2 }
+
+val tge = gene0 count
+val tgo = go_term0 count
+val tc = chemical0 count
+val to = organism0 count
+val td = disease0 count
+
+val ge = ptt5.filter{ e => e._3 == "gene_protein"}.map{ e => e._1 }.distinct.count
+val go = ptt5.filter{ e => e._3 == "go_term"}.map{ e => e._1 }.distinct.count
+val c = ptt5.filter{ e => e._3 == "chemical"}.map{ e => e._1 }.distinct.count
+val o = ptt5.filter{ e => e._3 == "organism"}.map{ e => e._1 }.distinct.count
+val d = ptt5.filter{ e => e._3 == "disease"}.map{ e => e._1 }.distinct.count
+
+### 6 
+val ptt6 = ptt.filter{ l => l._2.length == 6 }
+ptt6.cache
+
+val chemical6 = ptt6.filter{ e => e._3 == "chemical"}.map{ e => e._2 }
+val gene6 = ptt6.filter{ e => e._3 == "gene_protein"}.map{ e => e._2 }
+val disease6 = ptt6.filter{ e => e._3 == "disease"}.map{ e => e._2 }
+val organism6 = ptt6.filter{ e => e._3 == "organism"}.map{ e => e._2 }
+val go_term6 = ptt6.filter{ e => e._3 == "go_term"}.map{ e => e._2 }
+
+val tge = gene6 count
+val tgo = go_term6 count
+val tc = chemical6 count
+val to = organism6 count
+val td = disease6 count
+
+val ge = ptt6.filter{ e => e._3 == "gene_protein"}.map{ e => e._1 }.distinct.count
+val go = ptt6.filter{ e => e._3 == "go_term"}.map{ e => e._1 }.distinct.count
+val c = ptt6.filter{ e => e._3 == "chemical"}.map{ e => e._1 }.distinct.count
+val o = ptt6.filter{ e => e._3 == "organism"}.map{ e => e._1 }.distinct.count
+val d = ptt6.filter{ e => e._3 == "disease"}.map{ e => e._1 }.distinct.count
+
+val x = gene0.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("gene0")
+val x2 = disease0.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x2).saveAsTextFile("disease0")
+val x3 = chemical0.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x3).saveAsTextFile("chemical0")
+val x4 = organism0.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x4).saveAsTextFile("organism0")
+val x5 = go_term0.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x5).saveAsTextFile("go_term0")
+
+val x = gene3.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("gene3")
+val x = disease3.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("disease3")
+val x = chemical3.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("chemical3")
+val x = organism3.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("organism3")
+val x = go_term3.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x).saveAsTextFile("go_term3")
+
+val x1 = gene4.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x1).saveAsTextFile("gene4")
+val x2 = disease4.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x2).saveAsTextFile("disease4")
+val x3 = chemical4.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x3).saveAsTextFile("chemical4")
+val x4 = organism4.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x4).saveAsTextFile("organism4")
+val x5 = go_term4.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x5).saveAsTextFile("go_term4")
+
+val x1 = gene5.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x1).saveAsTextFile("gene5")
+val x2 = disease5.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x2).saveAsTextFile("disease5")
+val x3 = chemical5.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x3).saveAsTextFile("chemical5")
+val x4 = organism5.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x4).saveAsTextFile("organism5")
+val x5 = go_term5.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x5).saveAsTextFile("go_term5")
+
+val x1 = gene6.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x1).saveAsTextFile("gene6")
+val x2 = disease6.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x2).saveAsTextFile("disease6")
+val x3 = chemical6.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x3).saveAsTextFile("chemical6")
+val x4 = organism6.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x4).saveAsTextFile("organism6")
+val x5 = go_term6.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(x5).saveAsTextFile("go_term6")
+
+chemical3.intersection(disease3).distinct.saveAsTextFile("chemical3_disease3")
+chemical3.intersection(gene3).distinct.saveAsTextFile("chemical3_gene3")
+chemical3.intersection(go_term3).distinct.saveAsTextFile("chemical3_go_term3")
+chemical3.intersection(organism3).distinct.saveAsTextFile("chemical3_organism3")
+disease3.intersection(gene3).distinct.saveAsTextFile("disease3_gene3")
+disease3.intersection(go_term3).distinct.saveAsTextFile("disease3_go_term3")
+disease3.intersection(organism3).distinct.saveAsTextFile("disease3_organism3")
+gene3.intersection(organism3).distinct.saveAsTextFile("gene3_organism3")
+gene3.intersection(go_term3).distinct.saveAsTextFile("gene3_go_term3")
+go_term3.intersection(organism3).distinct.saveAsTextFile("go_term3_organism3")
+
+chemical4.intersection(disease4).distinct.saveAsTextFile("chemical4_disease4")
+chemical4.intersection(gene4).distinct.saveAsTextFile("chemical4_gene4")
+chemical4.intersection(go_term4).distinct.saveAsTextFile("chemical4_go_term4")
+chemical4.intersection(organism4).distinct.saveAsTextFile("chemical4_organism4")
+disease4.intersection(gene4).distinct.saveAsTextFile("disease4_gene4")
+disease4.intersection(go_term4).distinct.saveAsTextFile("disease4_go_term4")
+disease4.intersection(organism4).distinct.saveAsTextFile("disease4_organism4")
+gene4.intersection(organism4).distinct.saveAsTextFile("gene4_organism4")
+gene4.intersection(go_term4).distinct.saveAsTextFile("gene4_go_term4")
+go_term4.intersection(organism4).distinct.saveAsTextFile("go_term4_organism4")
+
+chemical5.intersection(disease5).distinct.saveAsTextFile("chemical5_disease5")
+chemical5.intersection(gene5).distinct.saveAsTextFile("chemical5_gene5")
+chemical5.intersection(go_term5).distinct.saveAsTextFile("chemical5_go_term5")
+chemical5.intersection(organism5).distinct.saveAsTextFile("chemical5_organism5")
+disease5.intersection(gene5).distinct.saveAsTextFile("disease5_gene5")
+disease5.intersection(go_term5).distinct.saveAsTextFile("disease5_go_term5")
+disease5.intersection(organism5).distinct.saveAsTextFile("disease5_organism5")
+gene5.intersection(organism5).distinct.saveAsTextFile("gene5_organism5")
+gene5.intersection(go_term5).distinct.saveAsTextFile("gene5_go_term5")
+go_term5.intersection(organism5).distinct.saveAsTextFile("go_term5_organism5")
+
+chemical6.intersection(disease6).distinct.saveAsTextFile("chemical6_disease6")
+chemical6.intersection(gene6).distinct.saveAsTextFile("chemical6_gene6")
+chemical6.intersection(go_term6).distinct.saveAsTextFile("chemical6_go_term6")
+chemical6.intersection(organism6).distinct.saveAsTextFile("chemical6_organism6")
+disease6.intersection(gene6).distinct.saveAsTextFile("disease6_gene6")
+disease6.intersection(go_term6).distinct.saveAsTextFile("disease6_go_term6")
+disease6.intersection(organism6).distinct.saveAsTextFile("disease6_organism6")
+gene6.intersection(organism6).distinct.saveAsTextFile("gene6_organism6")
+gene6.intersection(go_term6).distinct.saveAsTextFile("gene6_go_term6")
+go_term6.intersection(organism6).distinct.saveAsTextFile("go_term6_organism6")
+
+chemical0.intersection(disease0).distinct.saveAsTextFile("chemical0_disease0")
+chemical0.intersection(gene0).distinct.saveAsTextFile("chemical0_gene0")
+chemical0.intersection(go_term0).distinct.saveAsTextFile("chemical0_go_term0")
+chemical0.intersection(organism0).distinct.saveAsTextFile("chemical0_organism0")
+disease0.intersection(gene0).distinct.saveAsTextFile("disease0_gene0")
+disease0.intersection(go_term0).distinct.saveAsTextFile("disease0_go_term0")
+disease0.intersection(organism0).distinct.saveAsTextFile("disease0_organism0")
+gene0.intersection(organism0).distinct.saveAsTextFile("gene0_organism0")
+gene0.intersection(go_term0).distinct.saveAsTextFile("gene0_go_term0")
+go_term0.intersection(organism0).distinct.saveAsTextFile("go_term0_organism0")
+
+
+
+val chemical = sc.textFile("chemical0/part-*").map{ l => val d = l.split("\t"); (d(0), d(1).toInt) }
+val disease = sc.textFile("disease0/part-*").map{ l => val d = l.split("\t"); (d(0), d(1).toInt) }
+val organism = sc.textFile("organism0/part-*").map{ l => val d = l.split("\t"); (d(0), d(1).toInt) }
+val go_term = sc.textFile("go_term0/part-*").map{ l => val d = l.split("\t"); (d(0), d(1).toInt) }
+
+gene.join(disease).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("gene_disease")
+gene.join(chemical).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("gene_chemical")
+gene.join(organism).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("gene_organism")
+gene.join(go_term).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("gene_go_term")
+
+chemical.join(disease).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("chemical_disease")
+chemical.join(organism).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("chemical_organism")
+chemical.join(go_term).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("chemical_go_term")
+chemical.join(gene).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("chemical_gene")
+
+disease.join(organism).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("disease_organism")
+disease.join(go_term).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("disease_go_term")
+disease.join(gene).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("disease_gene")
+disease.join(chemical).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("disease_chemical")
+
+go_term.join(organism).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("go_term_organism")
+go_term.join(chemical).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("go_term_chemical")
+go_term.join(gene).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("go_term_gene")
+go_term.join(disease).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("go_term_disease")
+
+organism.join(go_term).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("organism_go_term")
+organism.join(chemical).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("organism_chemical")
+organism.join(gene).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("organism_gene")
+organism.join(disease).map{ case (a, (b, c)) => a + "\t" + b + "\t" + c }.saveAsTextFile("organism_disease")
+
+# gene
+val gene_pmcid_name = sc.textFile("160425/gene_pmcid_name.tsv")
+val gene_name_freq = gene_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(gene_name_freq).saveAsTextFile("160425/gene_name_freq")
+# disease
+val disease_pmcid_name = sc.textFile("160425/disease_pmcid_name.tsv")
+val disease_name_freq = disease_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(disease_name_freq).saveAsTextFile("160425/disease_name_freq")
+# go
+val go_pmcid_name = sc.textFile("160425/go_pmcid_name.tsv")
+val go_name_freq = go_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(go_name_freq).saveAsTextFile("160425/go_name_freq")
+# species
+val species_pmcid_name = sc.textFile("160425/species_pmcid_name.tsv")
+val species_name_freq = species_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(species_name_freq).saveAsTextFile("160425/species_name_freq")
+# chemical
+val chemical_pmcid_name = sc.textFile("160425/chemical_pmcid_name.tsv")
+val chemical_name_freq = chemical_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(chemical_name_freq).saveAsTextFile("160425/chemical_name_freq")
+
+
+#
+val species_goDF = sql("SELECT species.name, species.freq, go.freq AS a FROM species LEFT OUTER JOIN go ON species.name = go.name ORDER BY species.freq DESC")
+species_goDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/species_go")
+val species_diseaseDF = sql("SELECT species.name, species.freq, disease.freq AS a FROM species LEFT OUTER JOIN disease ON species.name = disease.name ORDER BY species.freq DESC")
+species_diseaseDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/species_disease")
+val species_chemicalDF = sql("SELECT species.name, species.freq, chemical.freq AS a FROM species LEFT OUTER JOIN chemical ON species.name = chemical.name ORDER BY species.freq DESC")
+species_chemicalDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/species_chemical")
+
+# go
+
+val go_diseaseDF = sql("SELECT go.name, go.freq, disease.freq AS a FROM go LEFT OUTER JOIN disease ON go.name = disease.name ORDER BY go.freq DESC")
+go_diseaseDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/go_disease")
+
+val go_chemicalDF = sql("SELECT go.name, go.freq, chemical.freq AS a FROM go LEFT OUTER JOIN chemical ON go.name = chemical.name ORDER BY go.freq DESC")
+go_chemicalDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/go_chemical")
+
+# disease
+
+val disease_chemicalDF = sql("SELECT disease.name, disease.freq, chemical.freq AS a FROM disease LEFT OUTER JOIN chemical ON disease.name = chemical.name ORDER BY disease.freq DESC")
+disease_chemicalDF.rdd.map{ case Row(a, b, c) => a + "\t" + b + "\t" + c }.saveAsTextFile("/home/jee/tsv/disease_chemical")
+
+
+val gene_pmcid_name = sc.textFile("160425/gene_pmcid_name.tsv")
+val gene_name_freq = gene_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(gene_name_freq).saveAsTextFile("160425/gene_name_freq")
+
+val chemical_pmcid_name = sc.textFile("160425/chemical_pmcid_name.tsv")
+val chemical_name_freq = chemical_pmcid_name.map{ _.split("\t")(1) }.countByValue().toSeq.sortBy(_._2).reverse.map{ e => e._1 + "\t" + e._2 }
+sc.parallelize(chemical_name_freq).saveAsTextFile("160425/chemical_name_freq")
+
+
+###
+
+import java.io._
+import monq.jfa._
+import monq.programs.DictFilter
+import com.cloudera.datascience.common.XmlInputFormat
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.io._
+val path = "oa201603/*.xml"
+val conf = new Configuration()
+conf.set(XmlInputFormat.START_TAG_KEY, "<article ")
+conf.set(XmlInputFormat.END_TAG_KEY, "</article>")
+val kvs = sc.newAPIHadoopFile(path, classOf[XmlInputFormat], classOf[LongWritable], classOf[Text], conf)
+val rawXmls = kvs.flatMap(p => try { Some(scala.xml.XML.loadString(p._2.toString)) } catch { case e: Exception => None } )
+val titles = rawXmls.map{ x => (x \\ "article-title").text }
+val acc = sc.broadcast(scala.io.Source.fromFile("target/acc150717.mwt").getLines().toList.mkString("\t")).value
+// titles.mapPartitions(it => { it.map(_.length) })
+// titles map { e => val in = new StringReader("<mwt><template>[%0](%1)</template>" +"<t p1='333'>of</t></mwt>"); val df = new DictFilter(in, "raw", "", false); val r = df.createRun(); r.filter(e) }
+
+
+import java.io._
+import java.util._
+import monq.jfa._
+import monq.programs.DictFilter
+
+class Annotator extends Serializable {
+  val reader = new StringReader("<mwt><template>[%0](%1)</template>" +"<t p1='333'>of</t></mwt>")
+  val dict = new DictFilter(reader, "raw", "", false)
+  val r = dict.createRun()
+
+  def annotate(text: String) = {
+    val baos = new ByteArrayOutputStream()
+    // val reader = new StringReader("<mwt><template>[%0](%1)</template>" +"<t p1='333'>of</t></mwt>")
+    // val dict = new DictFilter(reader, "raw", "", false)
+
+    // TODO use for and Try
+    val fr = new StringReader(text)
+    val rcs = new ReaderCharSource(fr)
+    val writer = new PrintStream(baos)
+    // val r = dict.createRun()
+
+    r.setIn(rcs)
+    r.filter(writer)
+  
+    fr.close()
+    writer.close()
+    baos.toString("UTF8")
+  }
+}
+
+object Annotator extends Serializable {
+  def apply(x: String) = new Annotator().annotate(x)
+}
+
+// val annotations = titles.mapPartitions(it => { it.flatMap(e => try { Some(new Annotator().annotate(e)) } catch { case e: Exception => None }) })
+val annotations = titles.mapPartitions(it => { val ann = new Annotator(); it.flatMap(e => try { Some(ann.annotate(e)) } catch { case e: Exception => None }) })

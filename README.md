@@ -1,1 +1,1 @@
-# spark-monq### running monq on spark
+# spark-monq### running monq on spark'''spark-submit --class org.europepmc.AnnotatorTest --master yarn --executor-cores 29 --jars target/ch06-lsa-1.0.1.jar,target/common-1.0.1.jar,target/monq-1.7.1.jar spark-monq_2.10-0.1-SNAPSHOT.jar'''

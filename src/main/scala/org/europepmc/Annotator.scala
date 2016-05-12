@@ -9,8 +9,12 @@ import com.cloudera.datascience.common.XmlInputFormat
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.io._
 
-class Annotator(val acc: String) extends Serializable {
+class Annotator extends Serializable {
+// class Annotator(val acc: String) extends Serializable {
 
+  val stream = getClass.getResourceAsStream("/acc150612.mwt")
+  val acc = scala.io.Source.fromInputStream(stream).getLines().toList.mkString("\n")
+  // val acc = scala.io.Source.fromFile("acc150612.mwt").getLines().toList.mkString("\n")
   val reader = new StringReader(acc)
   val dict = new DictFilter(reader, "raw", "", false)
   val r = dict.createRun()
@@ -44,10 +48,13 @@ object AnnotatorTest {
 
     val kvs = sc.newAPIHadoopFile(path, classOf[XmlInputFormat], classOf[LongWritable], classOf[Text], conf)
     val rawXmls = kvs.flatMap(p => try { Some(scala.xml.XML.loadString(p._2.toString)) } catch { case e: Exception => None } )
-    val titles = rawXmls.map{ x => (x \\ "article-title").text }
+    // val titles = rawXmls.map{ x => (x \\ "article-title").text }
+    val ps = rawXmls.map{ x => (x \\ "p").text }
 
-    val annotations = titles.mapPartitions(it => { val acc = "<mwt><template><z:acc db='%1'>%0</z:acc></template>" + "<r p1='1'>of</r>" + "<r p1='2'>GenBank</r>" + "</mwt>"; val ann = new Annotator(acc); it.flatMap(e => try { Some(ann.annotate(e)) } catch { case e: Exception => None }) })
-    annotations.saveAsTextFile("xxxxxxx")
+    // val annotations = titles.mapPartitions(it => { val acc = "<mwt><template><z:acc db='%1'>%0</z:acc></template>" + "<r p1='1'>of</r>" + "<r p1='2'>GenBank</r>" + "</mwt>"; val ann = new Annotator(acc); it.flatMap(e => try { Some(ann.annotate(e)) } catch { case e: Exception => None }) })
+    // val annotations = titles.mapPartitions(it => { val ann = new Annotator(); it.flatMap(e => try { Some(ann.annotate(e)) } catch { case ex: Exception => None }) })
+    val annotations = ps.mapPartitions(it => { val ann = new Annotator(); it.flatMap(e => try { Some(ann.annotate(e)) } catch { case ex: Exception => None }) })
+    annotations.saveAsTextFile("xxxxxxxx")
   }
 }
 

@@ -13,10 +13,9 @@ import com.elsevier.spark_xml_utils.xslt.XSLTProcessor
 import org.europepmc.annotator.MonqAnnotator
 import org.europepmc.nlp.CoreNLP._
 
-
 object RunAnnotator {
   def main(args: Array[String]) {
-    val path = args(0) // val path = "oa201603/PMC4736427_PMC4765918.xml"
+    val path = args(0)
     val out_path = args(1)
     val conf = new Configuration()
     val sc = new SparkContext()
@@ -57,7 +56,4 @@ object RunAnnotator {
     )
     annotations.saveAsTextFile(out_path)
   }
-
 }
-
-

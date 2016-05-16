@@ -8,7 +8,7 @@ import scala.collection.JavaConverters._
 
 import edu.stanford.nlp.ling.CoreAnnotations.{LemmaAnnotation, SentencesAnnotation, TokensAnnotation}
 import edu.stanford.nlp.pipeline.{Annotation, StanfordCoreNLP}
-import org.europepmc.annotator.MonqAnnotator
+// import org.europepmc.annotator.MonqAnnotator
 
 object CoreNLP {
 

@@ -28,22 +28,25 @@ object RunAnnotator {
     val proc = XSLTProcessor.getInstance(xsl)
 
     // RDDs
-    val kvs = sc.newAPIHadoopFile(path, classOf[XmlInputFormat], classOf[LongWritable], classOf[Text], conf)
-    val rawXmls = kvs.flatMap(p =>
+    val kvRDD = sc.newAPIHadoopFile(path, classOf[XmlInputFormat], classOf[LongWritable], classOf[Text], conf)
+
+    val rawXmlRDD = kvRDD.flatMap(p =>
 		    try {
 		      Some(scala.xml.XML.loadString(proc.transform(p._2.toString)))
 	    	    } catch {
 		      case e: Exception => None
 		    }
     )
-    val ps = rawXmls.map{ x => (x \\ "text").text }
+
+    val pRDD = rawXmlRDD.map{ x => (x \\ "text").text }
 
     /* calling CoreNLP pipeline */
-    val sentences = ps.mapPartitions(iter => {
+    val sentenceRDD = pRDD.mapPartitions(iter => {
       val pipeline = createNLPPipeline()
       iter.flatMap{ p => plainTextToSentences(p, pipeline) }
     })
-    val annotations = sentences.mapPartitions(it => {
+
+    val annotationRDD = sentenceRDD.mapPartitions(it => {
        val ann = new MonqAnnotator()
        it.flatMap(e =>
 		       try {
@@ -54,6 +57,7 @@ object RunAnnotator {
       )
      }
     )
-    annotations.saveAsTextFile(out_path)
+
+    annotationRDD.saveAsTextFile(out_path)
   }
 }

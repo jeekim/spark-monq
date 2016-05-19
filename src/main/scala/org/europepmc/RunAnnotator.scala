@@ -30,6 +30,7 @@ object RunAnnotator {
     // RDDs
     val kvRDD = sc.newAPIHadoopFile(path, classOf[XmlInputFormat], classOf[LongWritable], classOf[Text], conf)
 
+    // TODO use for sequence for all the transformations.
     val rawXmlRDD = kvRDD.flatMap(p =>
 		    try {
 		      Some(scala.xml.XML.loadString(proc.transform(p._2.toString)))
@@ -46,6 +47,7 @@ object RunAnnotator {
       iter.flatMap{ p => plainTextToSentences(p, pipeline) }
     })
 
+    // TODO get rid of try and catch, use Try?
     val annotationRDD = sentenceRDD.mapPartitions(it => {
        val ann = new MonqAnnotator()
        it.flatMap(e =>

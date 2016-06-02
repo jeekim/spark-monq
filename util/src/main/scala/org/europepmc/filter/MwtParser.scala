@@ -3,6 +3,7 @@ package org.europepmc.filter;
 import monq.jfa.Xml
 import java.util.Map
 
+// ADT product type
 case class MwtAtts(tagname: String, content: String, db: String, valmethod: String, domain: String, context: String, wsize: String, sec: String)
 
 class MwtParser(val map: java.util.Map[String, String]) {
@@ -26,4 +27,7 @@ class MwtParser(val map: java.util.Map[String, String]) {
   def contextHandler(ma: MwtAtts): String => String = ???
   def domainHandler(ma: MwtAtts): String => String = ???
   // def allHandler(ma: MwtAtts): String => String = contextHandler _ andThen domainHandler _
+  type Validator
+  def generateValidators(ma: MwtAtts): Seq[Validator] = ???
+  // use pattern matching with ma.
 }

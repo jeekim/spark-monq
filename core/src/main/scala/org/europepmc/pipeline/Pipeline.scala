@@ -23,20 +23,40 @@ trait Pipeline {
   // Annotation
   type AnnotatedSentence
   type Mention
+  type Relation
+  type Event
   type Tagger = String => Mention
   type Filter = Mention => NamedEntity
+  object Filter
 }
+
+// Type class for Mention?
+trait Filterable[Mention[_]]
 
 trait Tagger {
   def transform(in: String): String
 }
 
+trait SectionTagger extends Tagger {
+  def transform(in: String): String = in
+}
+
+object sectionTagger extends Tagger with SectionTagger
+
+trait Filter {
+  def transform(in: String): String
+}
+
 trait Annotation {
   def exsits: Boolean
+  def uri: Option[String]
   def get: NamedEntity
 }
 
-sealed trait NamedEntity
+sealed trait NamedEntity {
+  def id: String
+  def name: String
+}
 
 // type Gene <: NamedEntity
 case class Gene(id: String, name: String) extends NamedEntity

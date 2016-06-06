@@ -30,6 +30,10 @@ trait Pipeline {
   object Filter
 }
 
+// object Pipeline
+
+trait CollectionReader
+
 // Type class for Mention?
 trait Filterable[Mention[_]]
 
@@ -37,15 +41,11 @@ trait Tagger {
   def transform(in: String): String
 }
 
-trait SectionTagger extends Tagger {
-  def transform(in: String): String = in
-}
-
-object sectionTagger extends Tagger with SectionTagger
-
 trait Filter {
   def transform(in: String): String
 }
+
+// trait Filter with ValidationRuleSet
 
 trait Annotation {
   def exsits: Boolean
@@ -65,6 +65,18 @@ case class GO(id: String, name: String) extends NamedEntity
 case class Disease(id: String, name: String) extends NamedEntity
 case class Chemical(id: String, name: String) extends NamedEntity
 case class AccNumber(id: String, name: String) extends NamedEntity
+
+
+// import Pipeline._
+// module
+
+// trait SectionTagger[Article] extends Tagger {
+trait SectionTagger extends Tagger {
+  def transform(in: String): String = in
+}
+
+// object sectionTagger extends Tagger with SectionTagger
+object sectionTagger extends SectionTagger
 
 object RunTagger
 object RunFilter

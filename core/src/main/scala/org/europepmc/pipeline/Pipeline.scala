@@ -2,6 +2,13 @@ package org.europepmc.pipeline
 
 trait Pipeline {
 
+  sealed trait Status
+  case object Raw extends Status
+  case object Tagged extends Status
+  case object Filtered extends Status
+
+  type Text[Status]
+
   // Data source
   // Patent, Wikipage, MEDLINE abstract, etc.
   type Collection[Article]
@@ -25,12 +32,18 @@ trait Pipeline {
   type Mention
   type Relation
   type Event
-  type Tagger = String => Mention
-  type Filter = Mention => NamedEntity
-  object Filter
+  type Tagger
+  type Filter
+  // object Filter
+
+  def compose: Tagger => Tagger => Tagger
 }
 
-// object Pipeline
+object Pipeline {
+  def buildTagger: Tagger = ???
+  def buildFilter: Filter = ???
+  def buildPipeline: Pipeline = ???
+}
 
 trait CollectionReader
 
@@ -38,11 +51,14 @@ trait CollectionReader
 trait Filterable[Mention[_]]
 
 trait Tagger {
-  def transform(in: String): String
+  type Text
+  def transform: Text => Text
 }
 
 trait Filter {
-  def transform(in: String): String
+  type Text[A]
+  type Mention
+  def transform: Text[Mention] => Text[Option[Mention]]
 }
 
 // trait Filter with ValidationRuleSet
@@ -66,17 +82,25 @@ case class Disease(id: String, name: String) extends NamedEntity
 case class Chemical(id: String, name: String) extends NamedEntity
 case class AccNumber(id: String, name: String) extends NamedEntity
 
-
-// import Pipeline._
-// module
-
 // trait SectionTagger[Article] extends Tagger {
 trait SectionTagger extends Tagger {
-  def transform(in: String): String = in
+  // def transform(in: String): String = in
+  type Text = String
+  def transform = s => s + "tagged"
 }
 
 // object sectionTagger extends Tagger with SectionTagger
 object sectionTagger extends SectionTagger
-
 object RunTagger
 object RunFilter
+
+package application {
+
+  object App {
+    import org.europepmc.pipeline.sectionTagger._
+
+    def main(args: Array[String]) {
+      println(transform("Hello, world!"))
+    }
+  }
+}

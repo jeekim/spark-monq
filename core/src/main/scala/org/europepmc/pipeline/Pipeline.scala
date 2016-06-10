@@ -45,6 +45,12 @@ object Pipeline {
   def buildPipeline: Pipeline = ???
 }
 
+trait DictionaryService
+
+trait TaggingService
+
+trait FilteringService
+
 trait CollectionReader
 
 // Type class for Mention?

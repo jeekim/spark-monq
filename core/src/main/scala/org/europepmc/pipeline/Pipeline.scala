@@ -1,35 +1,47 @@
-package org.europepmc.pipeline
+package org
+package europepmc
+package pipeline
+
+/* Status */
+sealed trait Status
+case object Raw extends Status
+case object Tagged extends Status
+case object Filtered extends Status
+
+sealed trait Section
+case object Title extends Section
+case object Abstract extends Section
+case object Introduction extends Section
+case object Method extends Section
+case object Result extends Section
+case object Discussion extends Section
 
 /* Pipeline */
 trait Pipeline {
-  // ADT
-  sealed trait Status
-  case object Raw extends Status
-  case object Tagged extends Status
-  case object Filtered extends Status
+  // Data source: Patent, Wikipage, MEDLINE abstract, etc.
+  type Collection[Article]
+  type Source
+  type Sink
 
   type Text[Status]
-
-  // Data source
-  // Patent, Wikipage, MEDLINE abstract, etc.
-  type Collection[Article]
-
   type Section = Seq[Sentence]
-  type Title <: Section
-  type Abstract <: Section
-  type Introduction <: Section
-  type Method <: Section
-  type Result <: Section
-  type Discussion <: Section
   type Sentence
 }
 
-trait PipelineService {
-  def compose: Tagger => Filter => Tagger
-  def buildPipeline: Pipeline
-}
-
 object Pipeline
+
+trait PipelineService {
+  // def compose: Tagger => Filter => Tagger
+  type TaggingError
+  // type Tagger[+A] = String => Either[TaggingError, A]
+  // just like State?
+  type Text
+  type Tagger = Text => (Text, Unit)
+  // map or flatMap
+
+  def buildPipeline(taggers: Seq[Tagger]): Pipeline
+  def runPipeline: Unit
+}
 
 /* Article */
 case class Article (xml: String) {
@@ -51,18 +63,20 @@ trait DictionaryService {
 }
 
 /* Tagger */
+// trait Tagger[A] {
 trait Tagger {
   type Text
   type Dictionary
   def transform: Text => Text
+  // def flatMap
 }
 
 trait TaggingService {
   type Text
   type TaggedText
 
-  def buildTagger: Dictionary => Tagger
-  def runTagger[A <: Text]: Tagger => Text => TaggedText
+  def buildTagger: Dictionary => Tagger // primitive? unit?
+  def runTagger[A <: Text]: Tagger => Text => TaggedText // primitive? run?
 }
 
 // trait SectionTagger[Article] extends Tagger {
@@ -105,12 +119,14 @@ trait Annotation {
   def exsits: Boolean
   def uri: Option[String]
   def get: NamedEntity
+}
 
-  sealed trait NamedEntity {
-    def id: String
-    def name: String
-  }
+trait NamedEntity {
+  def id: String
+  def name: String
+}
 
+object NamedEntity {
   case class Gene(id: String, name: String) extends NamedEntity
   case class Species(id: String, name: String) extends NamedEntity
   case class GO(id: String, name: String) extends NamedEntity
@@ -121,7 +137,6 @@ trait Annotation {
 
 trait AnnotationRepository
 trait AnnotationService
-
 
 // object sectionTagger extends Tagger with SectionTagger
 object sectionTagger extends SectionTagger
@@ -134,9 +149,7 @@ trait ReportGenerationService
 trait RdfGenerationService
 trait CollectionReader
 
-
 package application {
-
   object App {
     import org.europepmc.pipeline.sectionTagger._
 

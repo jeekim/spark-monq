@@ -21,13 +21,13 @@ class MonqAnnotator extends Serializable with Annotator {
   def annotate(text: String): String = {
     val baos = new ByteArrayOutputStream()
     // TODO use for and Try
-    val fr = new StringReader(text)
-    val rcs = new ReaderCharSource(fr)
+    val sr = new StringReader(text)
+    val rcs = new ReaderCharSource(sr)
     val writer = new PrintStream(baos)
 
     r.setIn(rcs)
     r.filter(writer)
-    fr.close()
+    sr.close()
     writer.close()
     baos.toString("UTF8")
   }

@@ -34,7 +34,7 @@ object RunAnnotator {
     val rawXmlRDD = kvRDD.flatMap(p =>
 		    try {
 		      Some(scala.xml.XML.loadString(proc.transform(p._2.toString)))
-	    	    } catch {
+        } catch {
 		      case e: Exception => None
 		    }
     )
@@ -47,8 +47,9 @@ object RunAnnotator {
       iter.flatMap{ p => plainTextToSentences(p, pipeline) }
     })
 
+    sentenceRDD.saveAsTextFile(out_path)
     // TODO get rid of try and catch, use Try?
-    val annotationRDD = sentenceRDD.mapPartitions(it => {
+    /*val annotationRDD = sentenceRDD.mapPartitions(it => {
        val ann = new MonqAnnotator()
        it.flatMap(e =>
 		       try {
@@ -60,6 +61,6 @@ object RunAnnotator {
      }
     )
 
-    annotationRDD.saveAsTextFile(out_path)
+    annotationRDD.saveAsTextFile(out_path)*/
   }
 }

@@ -1,3 +1,8 @@
+import AssemblyKeys._
+
+assemblySettings
+
+
 lazy val commonSettings = Seq(
   scalaVersion := "2.10.4",
   resolvers += Resolver.mavenLocal

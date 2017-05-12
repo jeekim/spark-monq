@@ -6,7 +6,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.JavaConverters._
 
 
-import edu.stanford.nlp.ling.CoreAnnotations.{LemmaAnnotation, SentencesAnnotation, TokensAnnotation}
+import edu.stanford.nlp.ling.CoreAnnotations.{TextAnnotation, LemmaAnnotation, SentencesAnnotation, TokensAnnotation, PartOfSpeechAnnotation}
 import edu.stanford.nlp.pipeline.{Annotation, StanfordCoreNLP}
 // import org.europepmc.annotator.MonqAnnotator
 
@@ -14,7 +14,7 @@ object CoreNLP {
 
   def createNLPPipeline(): StanfordCoreNLP = {
     val props = new Properties()
-    props.put("annotators", "tokenize, ssplit")
+    props.put("annotators", "tokenize, ssplit, pos")
     // props.put("annotators", "tokenize, ssplit, pos, lemma")
     new StanfordCoreNLP(props)
   }
@@ -24,12 +24,15 @@ object CoreNLP {
     pipeline.annotate(doc)
     val outs = new ArrayBuffer[String]()
     val sentences = doc.get(classOf[SentencesAnnotation])
+
+    // http://stanfordnlp.github.io/CoreNLP/api.html
     for (sentence <- sentences.asScala) {
-      outs += sentence.toString()
+      // outs += sentence.toString()
+      for (token <- sentence.get(classOf[TokensAnnotation]).asScala)
+         // outs += token.get(classOf[TextAnnotation])
+         outs += token.get(classOf[PartOfSpeechAnnotation])
     }
-    outs 
+    outs
   }
 
 }
-
-

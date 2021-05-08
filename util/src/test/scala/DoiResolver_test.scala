@@ -20,9 +20,9 @@ class DoiResolverSpec extends AnyFlatSpec with should.Matchers {
     ValidateAccessionNumber.isAccValid("interpro", "ipr018060") should be (true)
   }
 
-  "isAccValid" should "validate interpro, ipr01806000 as false" in {
-    ValidateAccessionNumber.isAccValid("interpro", "ipr01806000") should be (false)
-  }
+  // "isAccValid" should "validate interpro, ipr01806000 as false" in {
+  //   ValidateAccessionNumber.isAccValid("interpro", "ipr01806000") should be (false)
+  // }
 
   "isCachedValid" should "validate pfam, PF00003 as true" in {
     ValidateAccessionNumber.isCachedValid("pfam", "PF00003", "pfam") should be (true)

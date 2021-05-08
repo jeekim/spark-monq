@@ -3,8 +3,10 @@ package org.europepmc.filter
 import org.europepmc.filter._
 import monq.jfa._
 import org.scalatest._
+import flatspec._
+import matchers._
 
-class DoiResolverSpec extends AnyFlatSpec with Matchers {
+class DoiResolverSpec extends AnyFlatSpec with should.Matchers {
   //"doiResolver.isValidID" should "validate 10.5061/dryad.pk045 as true" in {
   //  val doiResolver = new DoiResolver
   //  doiResolver.isValidID("doi", "10.5061/dryad.pk045") should be (true)

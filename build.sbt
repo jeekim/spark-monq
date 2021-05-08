@@ -23,7 +23,7 @@ lazy val core = (project in file("core")).
   settings(commonSettings: _*).
   settings(
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.4" % "test",
+      "org.scalatest" %% "scalatest" % "3.2.7" % "test",
       "org.apache.spark" %% "spark-core" % "1.2.0"
     )
   )

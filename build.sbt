@@ -15,7 +15,7 @@ lazy val util = (project in file("util")).
   settings(commonSettings: _*).
   settings(
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.7" % "test"
     )
   )
 
